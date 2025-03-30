@@ -2,8 +2,8 @@ from typing import Union
 from pygame import Event, Surface, Rect
 from pygame.constants import MOUSEMOTION
 
-from padding import Padding
-from layout import WLayout
+from .padding import Padding
+from .layout import WLayout
 
 
 class Widget:

@@ -1,6 +1,6 @@
 from pygame import Color, Surface
 
-from widget import Widget
+from .widget import Widget
 
 class BackgroundBase(Widget):
     def __init__(self, parent: Widget | None = None):

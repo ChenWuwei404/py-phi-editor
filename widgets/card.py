@@ -1,9 +1,9 @@
 from pygame import Surface, draw
 
-from background_base import BackgroundBase, DynamicBackgroundBase
-from border_base import BorderBase
+from .background_base import BackgroundBase, DynamicBackgroundBase
+from .border_base import BorderBase
 
-from widget import Widget
+from .widget import Widget
 
 class Card(BackgroundBase, BorderBase):
     def __init__(self, parent: Widget | None = None):

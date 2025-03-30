@@ -1,6 +1,6 @@
 from pygame import Color, Surface, draw
 
-from widget import Widget
+from .widget import Widget
 
 class BorderBase(Widget):
     def __init__(self, parent: Widget | None = None):

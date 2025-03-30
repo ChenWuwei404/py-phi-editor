@@ -1,9 +1,9 @@
 from pygame import Surface
-from background_base import BackgroundBase
-from card import Card, DynamicCard
-from lable import Lable
+from .background_base import BackgroundBase
+from .card import Card, DynamicCard
+from .lable import Lable
 
-from widget import Widget
+from .widget import Widget
 
 class Button(Lable, DynamicCard):
     def __init__(self, text: str, parent: Widget | None = None):

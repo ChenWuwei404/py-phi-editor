@@ -1,9 +1,9 @@
-from button import Button
-from card import Card
+from .button import Button
+from .card import Card
 
-from widget import Widget
+from .widget import Widget
 
-from layout import HBoxLayout, VBoxLayout
+from .layout import HBoxLayout, VBoxLayout
 
 
 

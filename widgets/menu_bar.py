@@ -1,7 +1,7 @@
-from background_base import BackgroundBase
-from layout import HBoxLayout
-from padding import Padding
-from button import Button
+from .background_base import BackgroundBase
+from .layout import HBoxLayout
+from .padding import Padding
+from .button import Button
 
 from pygame import Surface, Color
 

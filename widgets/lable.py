@@ -1,5 +1,5 @@
 from pygame import Surface, Color
-from widget import Widget
+from .widget import Widget
 
 from pygame.font import Font, SysFont, get_init
 
