@@ -9,7 +9,7 @@ if not get_init():
 
 
 
-DEFAULT_FONT = SysFont("cmdysj", 16)
+DEFAULT_FONT = SysFont("cmdysj", 14)
 # DEFAULT_FONT = Font()
 
 class Lable(Widget):

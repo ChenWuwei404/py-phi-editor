@@ -3,12 +3,13 @@ from .layout import HBoxLayout
 from .padding import Padding
 from .button import Button
 
-from pygame import Surface, Color
+from pygame import Surface, Color, draw
 
 class MenuBar(BackgroundBase):
     def __init__(self, parent = None):
         super().__init__(parent)
         self.background_color_normal = Color(32, 32, 32)
+        self.set_width(-1)
         self.set_layout(HBoxLayout())
         self.set_padding(Padding(0))
         self.set_spacing(0)
@@ -22,6 +23,13 @@ class MenuBarButton(Button):
 
         self.set_height(32)
         self.set_padding(Padding(8))
+
+    def draw_background(self, canvas):
+        draw.rect(canvas, self.background_color, self.rect.inflate(-self.padding.left, -self.padding.top), border_radius=self.border_radius)
+
+    def update(self):
+        super().update()
+        self.color = Color(255, 255, 255) if self.hover else Color(128, 128, 128)
 
 
 if __name__ == '__main__':
