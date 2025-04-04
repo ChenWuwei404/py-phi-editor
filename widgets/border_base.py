@@ -11,5 +11,5 @@ class BorderBase(Widget):
 
     def draw_border(self, canvas: Surface):
         if self.border_width > 0:
-            rect = self.rect.inflate(-self.border_width, -self.border_width)
+            rect = self.rect.inflate(self.border_width, self.border_width)
             draw.rect(canvas, self.border_color_normal, rect, self.border_width)
