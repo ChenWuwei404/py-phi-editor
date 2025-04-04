@@ -38,6 +38,20 @@ main_page = Page(screen)
 main_page.set_layout(VBoxLayout())
 main_page.add_child(editor_menu_bar)
 
+def add_right_click_menu_test(event: pygame.Event):
+    right_test = RightClickMenu(event.pos)
+    right_test.add_child(Lable(_("Tap")))
+    right_test.add_child(OneTimeRightClickButton(_("Delete")))
+    right_test.add_child(MenuSeparator())
+    right_test.add_child(RightClickButton(_("Copy")))
+    right_test.add_child(RightClickButton(_("Paste")))
+    right_test.add_child(MenuSeparator())
+    right_test.add_child(RightClickButton(_("Undo")))
+    right_test.add_child(RightClickButton(_("Redo")))
+    main_page.add_pinned_child(right_test)
+
+main_page.right_pressed.connect(add_right_click_menu_test)
+
 clock = pygame.time.Clock()
 
 
@@ -49,10 +63,12 @@ while True:
         if event.type in UI_EVENTS:
             main_page.process_event(event)
 
+
+    screen.fill((0, 0, 0))
     main_page.update()
     main_page.draw(screen)
     
 
-    clock.tick(60)
+    clock.tick(61)
     pygame.display.update()
     print(clock.get_fps())
