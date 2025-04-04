@@ -8,16 +8,20 @@ from .button import Button
 
 from pygame import Event, Surface, draw
 
+PADDING = 8
+
 class RightClickMenu(Pinned, Card):
     def __init__(self, position: tuple[int, int], parent=None):
         super().__init__(position, parent)
         self.set_layout(VBoxLayout())
         self.set_content_align(0)
-        self.set_padding(Padding(8))
-        self.set_spacing(8)
+        self.set_padding(Padding(PADDING))
+        self.set_spacing(0)
         self.ease_in = 0
 
     def update(self):
+        self.min_width = max(self.min_width, 200)
+        [child.set_width(-1) for child in self.get_childern()]
         self.ease_in += (1-self.ease_in)*0.1
         return super().update()
     
@@ -25,7 +29,7 @@ class RightClickMenu(Pinned, Card):
 class MenuSeparator(Widget):
     def __init__(self, parent: RightClickMenu | None = None):
         super().__init__(parent)
-        self.set_size(-1, 1)
+        self.set_size(-1, 2*PADDING+1)
 
     def get_parent(self) -> RightClickMenu:
         parent = super().get_parent()
@@ -37,7 +41,7 @@ class MenuSeparator(Widget):
     def draw(self, canvas: Surface):
         parent = self.get_parent()
         canvas = canvas.get_parent()
-        draw.line(canvas, parent.border_color_normal, (parent.x, parent.y+parent.padding.top + self.y), (parent.x+parent.width-2, parent.y+parent.padding.top + self.y), 1)
+        draw.line(canvas, parent.border_color_normal, (parent.x, parent.y+parent.padding.top + self.y+PADDING), (parent.x+parent.width-2, parent.y+parent.padding.top + self.y+PADDING), 1)
 
 
 class RightClickButton(Button):
@@ -45,6 +49,12 @@ class RightClickButton(Button):
         super().__init__(text, parent)
         self.border_width = 0
         self.set_height(32)
+        self.border_radius = 4
+
+    def draw_text(self, canvas: Surface):
+        text_surface = super().text_render()
+        text_rect = text_surface.get_rect(center=self.content_rect.center)
+        canvas.blit(text_surface, (self.padding.left, text_rect.y))
 
     def get_parent(self) -> RightClickMenu:
         parent = super().get_parent()

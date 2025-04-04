@@ -13,6 +13,9 @@ class Button(Lable, DynamicCard):
 
     def draw_self(self, canvas: Surface):
         super(DynamicCard, self).draw_self(canvas)
+        self.draw_text(canvas)
+
+    def draw_text(self, canvas: Surface):
         text_surface = super().text_render()
         text_rect = text_surface.get_rect(center=self.content_rect.center)
         canvas.blit(text_surface, text_rect)

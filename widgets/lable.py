@@ -22,9 +22,12 @@ class Lable(Widget):
     def text_render(self) -> Surface:
         text_surface = self.font.render(self.text, True, self.color)
         return text_surface.subsurface(0, 0, text_surface.width, int(text_surface.height*0.8))
+    
+    def draw_text(self, canvas: Surface):
+        canvas.blit(self.text_render(), (self.x, self.y))
 
     def draw_self(self, canvas: Surface):
-        canvas.blit(self.text_render(), (self.x, self.y))
+        self.draw_text(canvas)
 
     def set_text(self, text: str):
         self.text = text
