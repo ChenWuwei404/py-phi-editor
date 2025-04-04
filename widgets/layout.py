@@ -3,14 +3,14 @@ from typing import Union, TYPE_CHECKING
 if TYPE_CHECKING:
     from widget import Widget
 
-class WLayout:
+class Layout:
     def __init__(self) -> None:
         self.parent: Union['Widget', None] = None
 
     def update(self):
         pass
 
-class FlowLayout(WLayout):
+class FlowLayout(Layout):
     def update(self):
         if self.parent is None:
             return
@@ -43,7 +43,7 @@ class FlowLayout(WLayout):
         parent.min_height = total_height + parent.padding.top + parent.padding.bottom
         parent.min_width = parent.padding.left + parent.padding.right
 
-class HBoxLayout(WLayout):
+class HBoxLayout(Layout):
     def update(self):
         if self.parent is None:
             return
@@ -61,7 +61,7 @@ class HBoxLayout(WLayout):
         parent.min_height = max_line_height + parent.padding.top + parent.padding.bottom
         parent.min_width = x + parent.padding.left + parent.padding.right
 
-class VBoxLayout(WLayout):
+class VBoxLayout(Layout):
     def update(self):
         if self.parent is None:
             return
