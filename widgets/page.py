@@ -1,7 +1,7 @@
 from .widget import Widget
 from .padding import Padding
 
-from pygame import Surface
+from pygame import Surface, Event
 
 class Page(Widget):
     def __init__(self, screen: Surface, parent = None):
@@ -11,6 +11,25 @@ class Page(Widget):
 
         self.pinned_children: list[Widget] = []
 
+    def add_pinned_child(self, child: Widget):
+        self.pinned_children.append(child)
+        child.set_parent(self)
+
+    def remove_pinned_child(self, child: Widget):
+        self.pinned_children.remove(child)
+        child.set_parent(None)
+
+    def get_childern(self) -> list[Widget]:
+        return super().get_childern() + self.pinned_children
+
     def update(self):
-        super().update()
         self.set_size(*self.screen.size)
+        super().update()
+
+    def mousePressed(self, event: Event):
+        self.pinned_children.clear()
+
+    # def mouseLeftPressed(self, event: Event):
+    #     self.pinned_children.pop() if self.pinned_children else None
+    #     if self.pinned_children:
+    #         if self.pinned_children[-1].absolute_rect.collidepoint(event.pos):
