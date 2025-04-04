@@ -3,7 +3,8 @@ from pygame import Event, Surface, Rect, mouse
 from pygame.constants import *
 
 from .padding import Padding
-from .layout import WLayout
+from .layout import Layout
+from .trigger import Trigger
 
 
 class Widget:
@@ -33,9 +34,18 @@ class Widget:
         self.focus = False
         self.hover = False
 
-        self.layout = WLayout()
+        self.layout = Layout()
         self.content_align = 1  # 0 left, 1 center, 2 right
 
+        self.left_pressed = Trigger()
+        self.left_released = Trigger()
+
+        self.right_pressed = Trigger()
+        self.right_released = Trigger()
+
+        self.mouse_enter = Trigger()
+        self.mouse_leave = Trigger()
+        
 
     @property
     def width(self) -> int:
@@ -83,15 +93,25 @@ class Widget:
     def content_rect(self) -> Rect:
         return Rect(self.x + self.padding.left, self.y + self.padding.top, self.content_width, self.content_height)
     
+    def set_parent(self, parent: Union['Widget', None]=None):
+        self.parent = parent
 
+    def get_parent(self) -> 'Widget':
+        if self.parent:
+            return self.parent
+        else:
+            raise ValueError('Widget has no parent')
 
     def add_child(self, child: 'Widget'):
         self.children.append(child)
-        child.parent = self
+        child.set_parent(self)
 
     def remove_child(self, child: 'Widget'):
         self.children.remove(child)
-        child.parent = None
+        child.set_parent(None)
+
+    def get_childern(self) -> list['Widget']:
+        return self.children
 
     def set_visible(self, visible: bool = True):
         self.visible = visible
@@ -114,7 +134,7 @@ class Widget:
 
     def clear_focus(self):
         self.focus = False
-        [child.clear_focus() for child in self.children]
+        [child.clear_focus() for child in self.get_childern()]
 
     def set_x(self, x: int):
         self.x = x
@@ -142,7 +162,7 @@ class Widget:
     def get_size(self) -> tuple[int, int]:
         return self.width, self.height
     
-    def set_layout(self, layout: WLayout):
+    def set_layout(self, layout: Layout):
         layout.parent = self
         self.layout = layout
 
@@ -170,55 +190,71 @@ class Widget:
     def draw_border(self, canvas: Surface):
         pass
 
+    def get_subsurface(self, canvas: Surface) -> Surface:
+        try:
+            canvas = canvas.subsurface(self.content_rect)
+        except:
+            x, y = self.content_rect.topleft
+            canvas = canvas.subsurface((x, y, canvas.get_width()-x, canvas.get_height()-y))
+        return canvas
+
     def draw_children(self, canvas: Surface):
-        if self.children:
-            try:
-                canvas = canvas.subsurface(self.content_rect)
-            except:
-                x, y = self.content_rect.topleft
-                canvas = canvas.subsurface((x, y, canvas.get_width()-x, canvas.get_height()-y))
-            [child.draw(canvas) for child in self.children if child.visible]
+        if self.get_childern():
+            canvas = self.get_subsurface(canvas)
+            [child.draw(canvas) for child in self.get_childern() if child.visible]
 
     def update(self):
         self.layout.update()
-        [child.update() for child in self.children if child.visible]
+        [child.update() for child in self.get_childern() if child.visible]
 
     def process_event(self, event: Event):
         if event.type == MOUSEMOTION:
-            self.hover = self.absolute_rect.collidepoint(event.pos)
-            [child.process_event(event) for child in self.children if child.visible and child.enabled]
+            if self.absolute_rect.collidepoint(mouse.get_pos()):
+                self.mouseEnter(event) if self.hover else None
+                self.hover = True
+            else:
+                self.mouseLeave(event) if self.hover else None
+                self.hover = False
+            [child.process_event(event) for child in self.get_childern() if child.visible and child.enabled]
 
         if event.type in {MOUSEBUTTONDOWN, MOUSEBUTTONUP}:
-            for child in self.children:
+            for child in reversed(self.get_childern()):
                 if child.visible and child.enabled and child.absolute_rect.collidepoint(event.pos):
                     child.process_event(event)
                     return
 
             if event.type == MOUSEBUTTONDOWN:
+                self.mousePressed(event)
                 if self.absolute_rect.collidepoint(event.pos):
                     if event.button == 1:
                         self.mouseLeftPressed(event)
                     elif event.button == 3:
                         self.mouseRightPressed(event)
             elif event.type == MOUSEBUTTONUP:
+                self.mouseReleased(event)
                 if self.absolute_rect.collidepoint(event.pos):
                     if event.button == 1:
                         self.mouseLeftReleased(event)
                     elif event.button == 3:
                         self.mouseRightReleased(event)
 
+    def mousePressed(self, event: Event):
+        pass
+
+    def mouseReleased(self, event: Event):
+        pass
 
     def mouseLeftPressed(self, event: Event):
-        pass
+        self.left_pressed(event)
 
     def mouseLeftReleased(self, event: Event):
-        pass
+        self.left_released(event)
 
     def mouseRightPressed(self, event: Event):
-        pass
+        self.right_pressed(event)
 
     def mouseRightReleased(self, event: Event):
-        pass
+        self.right_released(event)
 
     def keyPressed(self, event: Event):
         pass
@@ -235,3 +271,12 @@ class Widget:
     def mouseWheel(self, event: Event):
         pass
 
+    def mouseEnter(self, event: Event):
+        self.mouse_enter(event)
+
+    def mouseLeave(self, event: Event):
+        self.mouse_leave(event)
+
+    # def __del__(self):
+    #     self.parent = None
+    #     self.children = []
