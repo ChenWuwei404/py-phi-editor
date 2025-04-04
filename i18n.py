@@ -1,11 +1,17 @@
 languages = {
     'zh': {
+        'Composer': '编曲',
+        'Charter': '铺面设计师',
+        'Song': '曲目',
+        'Arrangement': '编排',
+
         'File': '文件',
         'New': '新建',
         'Open': '打开',
         'Save': '保存',
         'Save As': '另存为',
         'Exit': '退出',
+
         'Edit': '编辑',
         'Undo': '撤销',
         'Redo': '重做',
@@ -14,18 +20,27 @@ languages = {
         'Paste': '粘贴',
         'Delete': '删除',
         'Select All': '全选',
+
         'View': '视图',
         'Zoom In': '放大',
         'Zoom Out': '缩小',
+
         'Help': '帮助',
         'About': '关于',
+
         'Language': '语言',
         'Chinese': '中文',
         'English': '英文',
         'Version': '版本',
         'Author': '作者',
         'License': '许可证',
+
         'Play': '播放',
+        'Position': '位置',
+        'Duration': '时长',
+        'Volume': '音量',
+        'Mute': '静音',
+        'Speed': '倍速',
     }
 }
 
