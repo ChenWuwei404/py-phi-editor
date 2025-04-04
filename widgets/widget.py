@@ -1,6 +1,6 @@
 from typing import Union
-from pygame import Event, Surface, Rect
-from pygame.constants import MOUSEMOTION
+from pygame import Event, Surface, Rect, mouse
+from pygame.constants import *
 
 from .padding import Padding
 from .layout import WLayout
@@ -187,3 +187,51 @@ class Widget:
         if event.type == MOUSEMOTION:
             self.hover = self.absolute_rect.collidepoint(event.pos)
             [child.process_event(event) for child in self.children if child.visible and child.enabled]
+
+        if event.type in {MOUSEBUTTONDOWN, MOUSEBUTTONUP}:
+            for child in self.children:
+                if child.visible and child.enabled and child.absolute_rect.collidepoint(event.pos):
+                    child.process_event(event)
+                    return
+
+            if event.type == MOUSEBUTTONDOWN:
+                if self.absolute_rect.collidepoint(event.pos):
+                    if event.button == 1:
+                        self.mouseLeftPressed(event)
+                    elif event.button == 3:
+                        self.mouseRightPressed(event)
+            elif event.type == MOUSEBUTTONUP:
+                if self.absolute_rect.collidepoint(event.pos):
+                    if event.button == 1:
+                        self.mouseLeftReleased(event)
+                    elif event.button == 3:
+                        self.mouseRightReleased(event)
+
+
+    def mouseLeftPressed(self, event: Event):
+        pass
+
+    def mouseLeftReleased(self, event: Event):
+        pass
+
+    def mouseRightPressed(self, event: Event):
+        pass
+
+    def mouseRightReleased(self, event: Event):
+        pass
+
+    def keyPressed(self, event: Event):
+        pass
+
+    def keyReleased(self, event: Event):
+        pass
+
+    def textEdit(self, event: Event):
+        pass
+
+    def textInput(self, event: Event):
+        pass
+
+    def mouseWheel(self, event: Event):
+        pass
+

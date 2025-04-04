@@ -56,7 +56,7 @@ class HBoxLayout(WLayout):
             child.max_width = parent.content_width
             child.set_pos(x, (parent.content_height - child.height) // 2)
             max_line_height = max(max_line_height, child.height)
-            x += child.height + parent.spacing
+            x += child.width + parent.spacing
         x -= parent.spacing
         parent.min_height = max_line_height + parent.padding.top + parent.padding.bottom
         parent.min_width = x + parent.padding.left + parent.padding.right

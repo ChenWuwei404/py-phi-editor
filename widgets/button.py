@@ -1,4 +1,4 @@
-from pygame import Surface
+from pygame import Surface, Event
 from .background_base import BackgroundBase
 from .card import Card, DynamicCard
 from .lable import Lable
