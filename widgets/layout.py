@@ -10,7 +10,7 @@ class WLayout:
     def update(self):
         pass
 
-class HBoxLayout(WLayout):
+class FlowLayout(WLayout):
     def update(self):
         if self.parent is None:
             return
@@ -43,6 +43,24 @@ class HBoxLayout(WLayout):
         parent.min_height = total_height + parent.padding.top + parent.padding.bottom
         parent.min_width = parent.padding.left + parent.padding.right
 
+class HBoxLayout(WLayout):
+    def update(self):
+        if self.parent is None:
+            return
+        parent = self.parent
+
+        x = 0
+        max_line_height = 0
+
+        for child in parent.children:
+            child.max_width = parent.content_width
+            child.set_pos(x, (parent.content_height - child.height) // 2)
+            max_line_height = max(max_line_height, child.height)
+            x += child.height + parent.spacing
+        x -= parent.spacing
+        parent.min_height = max_line_height + parent.padding.top + parent.padding.bottom
+        parent.min_width = x + parent.padding.left + parent.padding.right
+
 class VBoxLayout(WLayout):
     def update(self):
         if self.parent is None:
@@ -54,7 +72,7 @@ class VBoxLayout(WLayout):
 
         for child in parent.children:
             child.max_width = parent.content_width
-            child.set_pos((parent.content_width-child.width)//2, y)
+            child.set_pos((parent.content_width-child.width)//2, y) if parent.content_align == 1 else child.set_pos(0, y) if parent.content_align == 0 else child.set_pos(parent.content_width-child.width, y)
             max_col_width = max(max_col_width, child.width)
             y += child.height + parent.spacing
         y -= parent.spacing
