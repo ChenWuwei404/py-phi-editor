@@ -29,14 +29,28 @@ class EditorMenuBar(MenuBar):
 
 editor_menu_bar = EditorMenuBar()
 
+class StatueBar(MenuBar):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.version_label = Lable(_("Version: 0.1.0"))
+        self.add_child(self.version_label)
+
+statue_bar = StatueBar()
+
 
 screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
 pygame.display.set_caption("PyPhiEditor")
 pygame.display.set_icon(pygame.image.load(r'./resource/phi.png'))
 
 main_page = Page(screen)
+main_page.set_spacing(0)
 main_page.set_layout(VBoxLayout())
 main_page.add_child(editor_menu_bar)
+editor_area = Editor()
+main_page.add_child(editor_area)
+main_page.add_child(statue_bar)
+
 
 def add_right_click_menu_test(event: pygame.Event):
     right_test = RightClickMenu(event.pos)
@@ -71,4 +85,4 @@ while True:
 
     clock.tick(61)
     pygame.display.update()
-    print(clock.get_fps())
+    # print(clock.get_fps())
