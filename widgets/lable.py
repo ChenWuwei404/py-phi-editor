@@ -10,6 +10,8 @@ if not get_init():
 
 
 DEFAULT_FONT = SysFont("cmdysj", 14)
+DEFAULT_TITLE = SysFont("cmdysj", 24)
+DEFAULT_SUBTITLE = SysFont("cmdysj", 18)
 # DEFAULT_FONT = Font()
 
 class Lable(Widget):
@@ -32,3 +34,17 @@ class Lable(Widget):
     def set_text(self, text: str):
         self.text = text
         self.min_width, self.min_height = self.font.size(text)
+
+    def set_font(self, font: Font):
+        self.font = font
+        self.min_width, self.min_height = self.font.size(self.text)
+
+class Title(Lable):
+    def __init__(self, text: str, parent: Widget | None = None):
+        super().__init__(text, parent)
+        self.set_font(DEFAULT_TITLE)
+
+class SubTitle(Title):
+    def __init__(self, text: str, parent: Widget | None = None):
+        super().__init__(text, parent)
+        self.set_font(DEFAULT_SUBTITLE)
