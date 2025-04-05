@@ -47,7 +47,7 @@ class EditorGrid(Layout):
     def __init__(self, parent: Editor) -> None:
         super().__init__()
 
-        self.player_width_percent = 0.3
+        self.player_width_percent = 0.4
         self.timeline_width_percent = 0.7
     
     @property
