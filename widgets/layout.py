@@ -1,7 +1,7 @@
 from typing import Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from widget import Widget
+    from .widget import Widget
 
 class Layout:
     def __init__(self) -> None:
@@ -69,6 +69,13 @@ class VBoxLayout(Layout):
 
         y = 0
         max_col_width = 0
+
+        setted_height_children_total_height = sum(child.height for child in parent.children if child.setted_height >= 0)
+        space_height = parent.content_height - setted_height_children_total_height - parent.spacing * (len(parent.children)-1)
+        if space_height:
+            unset_height_children = [child for child in parent.children if child.setted_height == -1]
+            for child in unset_height_children:
+                child.max_height = (space_height // len(unset_height_children))
 
         for child in parent.children:
             child.max_width = parent.content_width

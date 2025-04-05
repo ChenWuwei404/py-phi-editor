@@ -3,6 +3,7 @@ from pygame import Event, Surface, Rect, mouse
 from pygame.constants import *
 
 from .padding import Padding
+
 from .layout import Layout
 from .trigger import Trigger
 
@@ -146,13 +147,13 @@ class Widget:
         self.set_x(x)
         self.set_y(y)
 
-    def set_width(self, width: int):
-        self.setted_width = width
+    def set_width(self, width: float):
+        self.setted_width = int(width)
 
-    def set_height(self, height: int):
-        self.setted_height = height
+    def set_height(self, height: float):
+        self.setted_height = int(height)
 
-    def set_size(self, width: int, height: int):
+    def set_size(self, width: float, height: float):
         self.set_width(width)
         self.set_height(height)
 
@@ -194,8 +195,11 @@ class Widget:
         try:
             canvas = canvas.subsurface(self.content_rect)
         except:
-            x, y = self.content_rect.topleft
-            canvas = canvas.subsurface((x, y, canvas.get_width()-x, canvas.get_height()-y))
+            try:
+                x, y = self.content_rect.topleft
+                canvas = canvas.subsurface((x, y, canvas.get_width()-x, canvas.get_height()-y))
+            except:
+                return Surface((0, 0))
         return canvas
 
     def draw_children(self, canvas: Surface):

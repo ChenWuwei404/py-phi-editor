@@ -2,6 +2,7 @@ from .background_base import BackgroundBase, DynamicBackgroundBase
 from .border_base import BorderBase
 from .button import Button
 from .card import Card, DynamicCard
+from .editor import Editor, EditorGrid
 from .lable import Lable
 from .menu_bar import MenuBar, MenuBarButton
 from .padding import Padding
