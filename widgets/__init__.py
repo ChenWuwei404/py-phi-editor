@@ -7,7 +7,7 @@ from .menu_bar import MenuBar, MenuBarButton
 from .padding import Padding
 from .page import Page
 from .pinned import Pinned
-from .right_click_menu import RightClickMenu, RightClickButton, MenuSeparator, OneTimeRightClickButton
+from .right_click_menu import RightClickMenu, RightClickButton, MenuSeparator, OneTimeRightClickButton, RightClickMenuTitle
 from .trigger import Trigger
 from .widget import Widget
 

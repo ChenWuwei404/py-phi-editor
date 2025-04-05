@@ -1,7 +1,7 @@
 from .widget import Widget
 from .padding import Padding
 
-from pygame import Surface, Event
+from pygame import Surface, Event, MOUSEBUTTONDOWN, mouse
 
 class Page(Widget):
     def __init__(self, screen: Surface, parent = None):
@@ -25,6 +25,13 @@ class Page(Widget):
     def update(self):
         self.set_size(*self.screen.size)
         super().update()
+
+    def process_event(self, event: Event):
+        if self.pinned_children and event.type == MOUSEBUTTONDOWN:
+            if not self.pinned_children[-1].absolute_rect.collidepoint(event.pos):
+                self.pinned_children.pop()
+                return
+        super().process_event(event)
 
     def mousePressed(self, event: Event):
         self.pinned_children.clear()

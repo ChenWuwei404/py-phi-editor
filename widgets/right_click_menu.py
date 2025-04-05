@@ -3,6 +3,7 @@ from .pinned import Pinned
 from .card import Card
 from .layout import VBoxLayout
 from .padding import Padding
+from .lable import SubTitle
 
 from .button import Button
 
@@ -67,3 +68,14 @@ class OneTimeRightClickButton(RightClickButton):
     def mouseLeftPressed(self, event: Event):
         super().mouseLeftPressed(event)
         self.get_parent().get_parent().remove_pinned_child(self.get_parent())
+
+class RightClickMenuTitle(SubTitle):
+    def __init__(self, text: str, parent: Widget | None = None):
+        super().__init__(text, parent)
+        self.set_height(32)
+        self.set_padding(Padding(PADDING))
+
+    def draw_text(self, canvas: Surface):
+        text_surface = super().text_render()
+        text_rect = text_surface.get_rect(center=self.content_rect.center)
+        canvas.blit(text_surface, (0, text_rect.y))

@@ -40,7 +40,7 @@ main_page.add_child(editor_menu_bar)
 
 def add_right_click_menu_test(event: pygame.Event):
     right_test = RightClickMenu(event.pos)
-    right_test.add_child(Lable(_("Tap")))
+    right_test.add_child(RightClickMenuTitle(_("Tap")))
     right_test.add_child(OneTimeRightClickButton(_("Delete")))
     right_test.add_child(MenuSeparator())
     right_test.add_child(RightClickButton(_("Copy")))
