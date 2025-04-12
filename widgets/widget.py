@@ -1,6 +1,6 @@
 from typing import Union
 from pygame import Event, Surface, Rect, mouse
-from pygame.constants import *
+from pygame.constants import *  # type: ignore
 
 from .padding import Padding
 
