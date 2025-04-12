@@ -1,3 +1,4 @@
+from pygame import Surface, draw
 from .widget import Widget
 from .layout import Layout
 from .padding import Padding
@@ -6,17 +7,29 @@ from .card import Card
 
 from .menu_bar import MenuBar
 
+class EditorCard(Card):
+    def draw_border(self, canvas: Surface):
+        if self.border_width:
+            draw.rect(canvas, self.border_color_normal, self.rect.inflate(-self.get_parent().spacing, -self.get_parent().spacing), self.border_width, border_radius=self.border_radius)
+
 class Editor(Widget):
     def __init__(self, parent: Widget | None = None):
         super().__init__(parent)
         self.set_padding(Padding(0))
+        self.set_spacing(2)
         self.set_size(-1, -1)
 
-        self.outline_area = Card()
-        self.player_area = Card()
-        self.attributes_area = Card()
-        self.timeline_area = Card()
-        self.editor_area = Card()
+        self.outline_area = EditorCard()
+        self.player_area = EditorCard()
+        self.attributes_area = EditorCard()
+        self.timeline_area = EditorCard()
+        self.editor_area = EditorCard()
+
+        self.outline_area.set_parent(self)
+        self.player_area.set_parent(self)
+        self.attributes_area.set_parent(self)
+        self.timeline_area.set_parent(self)
+        self.editor_area.set_parent(self)
 
         self.set_layout(EditorGrid(self))
 

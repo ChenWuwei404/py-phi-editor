@@ -1,4 +1,5 @@
 from pygame import Surface, Color
+from .widget_typing import *
 from .widget import Widget
 
 from pygame.font import Font, SysFont, get_init
@@ -38,6 +39,9 @@ class Lable(Widget):
     def set_font(self, font: Font):
         self.font = font
         self.min_width, self.min_height = self.font.size(self.text)
+
+    def set_color(self, color: ColorLike):
+        self.color = Color(color)
 
 class Title(Lable):
     def __init__(self, text: str, parent: Widget | None = None):

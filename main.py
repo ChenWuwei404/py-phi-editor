@@ -35,7 +35,7 @@ class StatueBar(MenuBar):
         self.set_height(32)
         self.set_padding(Padding(8))
 
-        self.version_label = Lable(_("PyPhiEditor 0.1.0"))
+        self.version_label = Lable(_("PyPhiEditor 0.0.1"))
         self.add_child(self.version_label)
 
 statue_bar = StatueBar()
@@ -56,17 +56,18 @@ main_page.add_child(statue_bar)
 
 def add_right_click_menu_test(event: pygame.Event):
     right_test = RightClickMenu(event.pos)
-    right_test.add_child(RightClickMenuTitle(_("Tap")))
-    right_test.add_child(OneTimeRightClickButton(_("Delete")))
-    right_test.add_child(MenuSeparator())
+    right_test.add_child(RightClickMenuTitle(_("Note clip")))
     right_test.add_child(RightClickButton(_("Copy")))
-    right_test.add_child(RightClickButton(_("Paste")))
+    right_test.add_child(RightClickButton(_("Cut")))
+    delete_button = OneTimeRightClickButton(_("Delete"))
+    delete_button.set_color((255, 64, 64))
+    right_test.add_child(delete_button)
     right_test.add_child(MenuSeparator())
-    right_test.add_child(RightClickButton(_("Undo")))
-    right_test.add_child(RightClickButton(_("Redo")))
+    right_test.add_child(RightClickButton(_("Add Modifier")))
+    right_test.add_child(RightClickButton(_("Multiline Edit")))
     main_page.add_pinned_child(right_test)
 
-main_page.right_pressed.connect(add_right_click_menu_test)
+editor_area.timeline_area.right_pressed.connect(add_right_click_menu_test)
 
 clock = pygame.time.Clock()
 
