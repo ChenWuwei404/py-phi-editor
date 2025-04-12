@@ -1,5 +1,7 @@
 languages = {
     'zh': {
+        '&spliter&': '',
+
         'Composer': '编曲',
         'Charter': '铺面设计师',
         'Song': '曲目',
@@ -12,6 +14,7 @@ languages = {
         'Save As': '另存为',
         'Exit': '退出',
 
+        'Add': '添加',
         'Edit': '编辑',
         'Undo': '撤销',
         'Redo': '重做',
@@ -24,6 +27,11 @@ languages = {
         'View': '视图',
         'Zoom In': '放大',
         'Zoom Out': '缩小',
+        'Note clip': '音符片段',
+        'Position clip': '位置片段',
+        'Rotation clip': '旋转片段',
+        'Alpha clip': '透明度片段',
+        'Speed clip': '速度片段',
 
         'Help': '帮助',
         'About': '关于',
@@ -41,6 +49,9 @@ languages = {
         'Volume': '音量',
         'Mute': '静音',
         'Speed': '倍速',
+
+        'Modifier': '修改器',
+        'Multiline': '多线',
     }
 }
 
@@ -51,7 +62,13 @@ def set_language(language: str) -> None:
     global_language = language
 
 def gettext(message: str) -> str:
-    try:
+    if global_language not in languages:
+        return message
+    if message in languages[global_language]:
         return languages[global_language][message]
-    except KeyError:
+    else:
+        words = message.split()
+        if len(words) == 1:
+            return message
+        message = languages[global_language]['&spliter&'].join(gettext(word) for word in words)
         return message
