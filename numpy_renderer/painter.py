@@ -93,8 +93,6 @@ def corner(
         corner_array = corner_array[:, ::-1]
         alpha_array = alpha_array[:, ::-1]
 
-    print(fill_color, border_color, border_width)
-
     if border_width == 1:
         border_width = 1.3
     draw_border(corner_array, alpha_array, radius, numpy.array(fill_color[:3]), numpy.array(border_color[:3]), border_width)
@@ -111,19 +109,25 @@ def rect(
     ):
     if radius:
         x, y, w, h = rect
+        if border_width:
+            corner(surface, (x+w-radius, y+h-radius), RIGHT|BOTTOM, radius, fill_color, border_color, border_width)
+            corner(surface, (x+w-radius, y+radius), RIGHT|TOP, radius, fill_color, border_color, border_width)
+            corner(surface, (x+radius, y+h-radius), LEFT|BOTTOM, radius, fill_color, border_color, border_width)
+            corner(surface, (x+radius, y+radius), LEFT|TOP, radius, fill_color, border_color, border_width)
+        else:
+            corner(surface, (x+w-radius, y+h-radius), RIGHT|BOTTOM, radius, fill_color, fill_color, border_width)
+            corner(surface, (x+w-radius, y+radius), RIGHT|TOP, radius, fill_color, fill_color, border_width)
+            corner(surface, (x+radius, y+h-radius), LEFT|BOTTOM, radius, fill_color, fill_color, border_width)
+            corner(surface, (x+radius, y+radius), LEFT|TOP, radius, fill_color, fill_color, border_width)
 
-        print((x+w-radius, y+h-radius))
-        corner(surface, (x+w-radius, y+h-radius), RIGHT|BOTTOM, radius, fill_color, border_color, border_width)
-        corner(surface, (x+w-radius, y+radius), RIGHT|TOP, radius, fill_color, border_color, border_width)
-        corner(surface, (x+radius, y+h-radius), LEFT|BOTTOM, radius, fill_color, border_color, border_width)
-        corner(surface, (x+radius, y+radius), LEFT|TOP, radius, fill_color, border_color, border_width)
         rect = Rect(rect)
         surface.fill(fill_color, rect.inflate(-2*radius, 0))
         surface.fill(fill_color, rect.inflate(0, -2*radius))
-        surface.fill(border_color, (x, y+radius, border_width, h-2*radius))
-        surface.fill(border_color, (x+w-border_width, y+radius, border_width, h-2*radius))
-        surface.fill(border_color, (x+radius, y, w-2*radius, border_width))
-        surface.fill(border_color, (x+radius, y+h-border_width, w-2*radius, border_width))
+        if border_width:
+            surface.fill(border_color, (x, y+radius, border_width, h-2*radius))
+            surface.fill(border_color, (x+w-border_width, y+radius, border_width, h-2*radius))
+            surface.fill(border_color, (x+radius, y, w-2*radius, border_width))
+            surface.fill(border_color, (x+radius, y+h-border_width, w-2*radius, border_width))
 
     
 if __name__ == '__main__':
