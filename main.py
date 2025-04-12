@@ -32,8 +32,10 @@ editor_menu_bar = EditorMenuBar()
 class StatueBar(MenuBar):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.set_height(32)
+        self.set_padding(Padding(8))
 
-        self.version_label = Lable(_("Version: 0.1.0"))
+        self.version_label = Lable(_("PyPhiEditor 0.1.0"))
         self.add_child(self.version_label)
 
 statue_bar = StatueBar()
