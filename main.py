@@ -56,7 +56,7 @@ main_page.add_child(statue_bar)
 
 def add_right_click_menu_test(event: pygame.Event):
     right_test = RightClickMenu(event.pos)
-    right_test.add_child(RightClickMenuTitle(_("Note clip")))
+    right_test.add_child(RightClickMenuTitle(_("Note Clip")))
     right_test.add_child(RightClickButton(_("Copy")))
     right_test.add_child(RightClickButton(_("Cut")))
     delete_button = OneTimeRightClickButton(_("Delete"))
@@ -86,6 +86,6 @@ while True:
     main_page.draw(screen)
     
 
-    clock.tick(61)
+    clock.tick(0)
     pygame.display.update()
-    # print(clock.get_fps())
+    print(clock.get_fps())
