@@ -7,14 +7,15 @@ from .card import Card
 
 from .menu_bar import MenuBar
 
+from numpy_renderer import painter
+
 class EditorCard(Card):
     def __init__(self, parent: Widget | None = None):
         super().__init__(parent)
         self.set_padding(Padding(0))
         
-    def draw_border(self, canvas: Surface):
-        if self.border_width:
-            draw.rect(canvas, self.border_color_normal, self.rect.inflate(-self.get_parent().spacing, -self.get_parent().spacing), self.border_width, border_radius=self.border_radius)
+    def draw_self(self, canvas: Surface):
+        painter.rect(canvas, self.background_color, self.border_color_normal, self.rect.inflate(-self.get_parent().spacing*2, -self.get_parent().spacing*2), self.border_width, self.border_radius)
 
 class Editor(Widget):
     def __init__(self, parent: Widget | None = None):
