@@ -11,7 +11,7 @@ RIGHT = 1
 TOP = 0
 BOTTOM = 2
 
-# @numba.njit()
+@numba.njit()
 def draw_border(img: numpy.ndarray, radius: int, fill_color: numpy.ndarray, border_color: numpy.ndarray, border_width: float):
     for x in range(radius):
         for y in range(radius):
@@ -96,7 +96,8 @@ def corner(
     try:
         draw_border(corner_array, radius, numpy.array(fill_color[:3]), numpy.array(border_color[:3]), border_width)
     except:
-        print("Error in draw_border")
+        # print("Error in draw_border")
+        pass
 
 def rect(
         surface: Surface,
