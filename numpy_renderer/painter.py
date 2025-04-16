@@ -125,8 +125,8 @@ def rect(
     ):
     if fill_color.a == 0 and border_width == 0:
         return
-    radius = int(radius*1.5)
     if radius:
+        radius = int(radius*1.5)
         surface.lock()
         x, y, w, h = rect
         if border_width:
@@ -144,18 +144,16 @@ def rect(
         draw.rect(surface, fill_color, rect.inflate(-2*radius, 0))
         draw.rect(surface, fill_color, (x, y+radius, radius, h-2*radius))
         draw.rect(surface, fill_color, (x+w-radius, y+radius, radius, h-2*radius))
-        # surface.fill(fill_color, rect.inflate(-2*radius, 0))
-        # surface.fill(fill_color, rect.inflate(0, -2*radius))
         if border_width:
             draw.rect(surface, border_color, (x, y+radius, border_width, h-2*radius))
             draw.rect(surface, border_color, (x+w-border_width, y+radius, border_width, h-2*radius))
             draw.rect(surface, border_color, (x+radius, y, w-2*radius, border_width))
             draw.rect(surface, border_color, (x+radius, y+h-border_width, w-2*radius, border_width))
-            # surface.fill(border_color, (x, y+radius, border_width, h-2*radius))
-            # surface.fill(border_color, (x+w-border_width, y+radius, border_width, h-2*radius))
-            # surface.fill(border_color, (x+radius, y, w-2*radius, border_width))
-            # surface.fill(border_color, (x+radius, y+h-border_width, w-2*radius, border_width))
         surface.unlock()
+    else:
+        draw.rect(surface, fill_color, rect)
+        if border_width:
+            draw.rect(surface, border_color, rect, border_width)
 
     
 if __name__ == '__main__':
