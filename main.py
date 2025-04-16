@@ -88,4 +88,4 @@ while True:
 
     clock.tick(0)
     pygame.display.update()
-    # print(clock.get_fps())
+    print(clock.get_fps())

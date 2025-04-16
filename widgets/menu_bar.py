@@ -5,6 +5,8 @@ from .button import Button
 
 from pygame import Surface, Color, draw
 
+from numpy_renderer import painter
+
 class MenuBar(BackgroundBase):
     def __init__(self, parent = None):
         super().__init__(parent)
@@ -24,8 +26,9 @@ class MenuBarButton(Button):
         self.set_height(32)
         self.set_padding(Padding(8))
 
-    def draw_background(self, canvas):
-        draw.rect(canvas, self.background_color, self.rect.inflate(-self.padding.left, -self.padding.top), border_radius=self.border_radius)
+    def draw_self(self, canvas: Surface):
+        painter.rect(canvas, self.background_color, self.border_color_normal, self.rect.inflate(-self.padding.left, -self.padding.top), self.border_width, self.border_radius)
+        self.draw_text(canvas)
 
     def update(self):
         super().update()

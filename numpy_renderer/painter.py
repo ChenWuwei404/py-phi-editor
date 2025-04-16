@@ -34,6 +34,22 @@ def draw_border(img: numpy.ndarray, radius: int, fill_color: numpy.ndarray, bord
                 img[x, y] = (1 - line_alpha) * img[x, y] + line_alpha * border_color
                 # alpha[x, y] = (1 - line_alpha) * alpha[x, y] + line_alpha * 255
 
+@numba.jit()
+def draw_solid(img: numpy.ndarray, radius: int, fill_color: numpy.ndarray):
+    mx, my, mp = img.shape
+    for x in range(min(mx, radius)):
+        for y in range(min(my, radius)):
+            point_distance = sqrt(x**2 + y**2)
+
+            angle = atan2(y, x)
+            line_distance = (1 + sin(2*angle)**2*0.09)*radius
+            # line_distance = (1 + sin(2*angle)**2**1.2*0.15)*radius
+
+            delta = line_distance - point_distance
+            solid_alpha = min(max(delta, 0), 1)
+
+            img[x, y] = (1 - solid_alpha) * img[x, y] + solid_alpha * fill_color
+
 def corner(
         surface: Surface,
         center_x: int,
@@ -92,9 +108,12 @@ def corner(
         # alpha_array = alpha_array[:, ::-1]
 
     if border_width == 1:
-        border_width = 1.3
+        border_width = 1.1
 
-    draw_border(corner_array, radius, numpy.array(fill_color[:3]), numpy.array(border_color[:3]), border_width)
+    if border_width:
+        draw_border(corner_array, radius, numpy.array(fill_color[:3]), numpy.array(border_color[:3]), border_width)
+    else:
+        draw_solid(corner_array, radius, numpy.array(fill_color[:3]))
 
 def rect(
         surface: Surface,
@@ -104,7 +123,7 @@ def rect(
         border_width: int = 1,
         radius: int = 0,
     ):
-    # radius = int(radius*1.5)
+    radius = int(radius*1.5)
     if radius:
         surface.lock()
         x, y, w, h = rect
