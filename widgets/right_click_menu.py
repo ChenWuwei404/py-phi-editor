@@ -64,7 +64,7 @@ class RightClickButton(Button):
         else:
             raise ValueError("Parent of VSeparator must be RightClickMenu")
 
-class OneTimeRightClickButton(RightClickButton):
+class OnceRightClickButton(RightClickButton):
     def mouseLeftPressed(self, event: Event):
         super().mouseLeftPressed(event)
         self.get_parent().get_parent().remove_pinned_child(self.get_parent())
