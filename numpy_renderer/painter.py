@@ -123,6 +123,8 @@ def rect(
         border_width: int = 1,
         radius: int = 0,
     ):
+    if fill_color.a == 0 and border_width == 0:
+        return
     radius = int(radius*1.5)
     if radius:
         surface.lock()
