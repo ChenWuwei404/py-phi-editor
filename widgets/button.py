@@ -1,11 +1,11 @@
 from pygame import Surface, Event
 from .background_base import BackgroundBase
 from .card import Card, DynamicCard
-from .lable import Lable
+from .label import Label
 
 from .widget import Widget
 
-class Button(Lable, DynamicCard):
+class Button(Label, DynamicCard):
     def __init__(self, text: str, parent: Widget | None = None):
         super(DynamicCard, self).__init__(parent)
         super().__init__(text, parent)

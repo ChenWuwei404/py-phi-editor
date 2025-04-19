@@ -3,7 +3,8 @@ from .pinned import Pinned
 from .card import Card
 from .layout import VBoxLayout
 from .padding import Padding
-from .lable import SubTitle
+from .label import SubTitle
+from .shadow import Shadow
 
 from .button import Button
 
@@ -11,7 +12,7 @@ from pygame import Event, Surface, draw
 
 PADDING = 8
 
-class RightClickMenu(Pinned, Card):
+class RightClickMenu(Pinned, Card, Shadow):
     def __init__(self, position: tuple[int, int], parent=None):
         super().__init__(position, parent)
         self.set_layout(VBoxLayout())
