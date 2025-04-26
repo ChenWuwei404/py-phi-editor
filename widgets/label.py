@@ -29,9 +29,6 @@ class Label(Widget):
     def draw_text(self, canvas: Surface):
         canvas.blit(self.text_render(), (self.x, self.y))
 
-    def draw_self(self, canvas: Surface):
-        self.draw_text(canvas)
-
     def set_text(self, text: str):
         self.text = text
         self.min_width, self.min_height = self.font.size(text)
@@ -42,6 +39,9 @@ class Label(Widget):
 
     def set_color(self, color: ColorLike):
         self.color = Color(color)
+
+    def draw_foreground(self, canvas: Surface):
+        self.draw_text(canvas)
 
 class Title(Label):
     def __init__(self, text: str, parent: Widget | None = None):

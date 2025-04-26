@@ -11,10 +11,6 @@ class Button(Label, DynamicCard):
         super().__init__(text, parent)
         self.set_height(48)
 
-    def draw_self(self, canvas: Surface):
-        super(DynamicCard, self).draw_self(canvas)
-        self.draw_text(canvas)
-
     def draw_text(self, canvas: Surface):
         text_surface = super().text_render()
         text_rect = text_surface.get_rect(center=self.content_rect.center)
@@ -42,5 +38,5 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEMOTION:
                 card.process_event(event)
         screen.fill((0, 0, 0))
-        card.draw_self(screen)
+        card.draw(screen)
         pygame.display.update()

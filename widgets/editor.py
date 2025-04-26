@@ -13,9 +13,6 @@ class EditorCard(Card):
     def __init__(self, parent: Widget | None = None):
         super().__init__(parent)
         self.set_padding(Padding(0))
-        
-    def draw_self(self, canvas: Surface):
-        painter.rect(canvas, self.background_color, self.border_color_normal, self.rect.inflate(-self.get_parent().spacing*2, -self.get_parent().spacing*2), self.border_width, self.border_radius)
 
 class Editor(Widget):
     def __init__(self, parent: Widget | None = None):

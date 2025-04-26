@@ -177,12 +177,33 @@ class Widget:
         self.content_align = align
 
 
-    def draw(self, canvas: Surface):
-        self.draw_self(canvas)
-        self.draw_children(canvas)
+    @property
+    def visual_rect(self) -> Rect:
+        return self.rect
 
-    def draw_self(self, canvas: Surface):
+    def draw(self, canvas: Surface):
+        """
+        Drawing order:
+        - `draw_background()`
+        - `draw_content()`
+          - `draw_children()`
+          - `draw_foreground()`
+        - `draw_shape()`
+          - `draw_border()`
+        
+        """
         self.draw_background(canvas)
+        self.draw_content(canvas)
+        self.draw_shape(canvas)
+
+    def draw_content(self, canvas: Surface):
+        self.draw_children(canvas)
+        self.draw_foreground(canvas)
+
+    def draw_foreground(self, canvas: Surface):
+        pass
+
+    def draw_shape(self, canvas: Surface):
         self.draw_border(canvas)
 
     def draw_background(self, canvas: Surface):
@@ -191,21 +212,13 @@ class Widget:
     def draw_border(self, canvas: Surface):
         pass
 
-    def get_subsurface(self, canvas: Surface) -> Surface:
-        try:
-            canvas = canvas.subsurface(self.content_rect)
-        except:
-            try:
-                x, y = self.content_rect.topleft
-                canvas = canvas.subsurface((x, y, canvas.get_width()-x, canvas.get_height()-y))
-            except:
-                return Surface((0, 0))
-        return canvas
+    def get_subsurface(self, canvas: Surface) -> Surface | None:
+        return canvas.subsurface(self.content_rect.clip(canvas.get_rect())) if self.content_rect.colliderect(canvas.get_rect()) else None
 
     def draw_children(self, canvas: Surface):
         if self.get_children():
-            canvas = self.get_subsurface(canvas)
-            [child.draw(canvas) for child in self.get_children() if child.visible]
+            sub_canvas = self.get_subsurface(canvas)
+            [child.draw(sub_canvas) for child in self.get_children() if child.visible] if sub_canvas else None
 
     def update(self):
         self.layout.update()
