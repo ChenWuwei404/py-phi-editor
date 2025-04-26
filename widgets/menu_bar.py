@@ -19,7 +19,7 @@ class MenuBar(BackgroundBase):
 class MenuBarButton(Button):
     def __init__(self, text, parent = None):
         super().__init__(text, parent)
-        self.background_color_normal = Color(32, 32, 32, 0)
+        self.background_color_normal = Color(0, 0, 0, 0)
         self.background_color_hover = Color(46, 46, 46)
         self.border_width = 0
 

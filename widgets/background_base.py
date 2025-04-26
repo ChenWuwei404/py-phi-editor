@@ -5,10 +5,10 @@ from .widget import Widget
 class BackgroundBase(Widget):
     def __init__(self, parent: Widget | None = None):
         super().__init__(parent)
-        self.background_color_normal = Color(24, 24, 24)
+        self.background_color_normal = Color(16, 16, 16)
 
     def draw_background(self, canvas: Surface):
-        canvas.fill(self.background_color, self.visual_rect)
+        canvas.fill(self.background_color, self.visual_rect) if self.background_color.a else None
 
     @property
     def background_color(self) -> Color:

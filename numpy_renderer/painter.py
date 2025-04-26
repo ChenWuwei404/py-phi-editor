@@ -275,7 +275,6 @@ def corner_redraw_rect(
         radius: int,
         corner_cache: tuple[Optional[ndarray], Optional[ndarray], Optional[ndarray], Optional[ndarray]],
     ):
-    radius = int(radius)
 
     surface.lock()
     x, y, w, h = rect

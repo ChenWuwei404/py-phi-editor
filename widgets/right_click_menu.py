@@ -8,7 +8,7 @@ from .shadow import Shadow
 
 from .button import Button
 
-from pygame import Event, Surface, draw
+from pygame import Event, Surface, draw, Color
 
 PADDING = 8
 
@@ -19,6 +19,7 @@ class RightClickMenu(Pinned, Card, Shadow):
         self.set_content_align(0)
         self.set_padding(Padding(PADDING))
         self.set_spacing(0)
+        self.background_color_normal = Color(24, 24, 24)
         self.ease_in = 0
 
     def update(self):
@@ -52,6 +53,7 @@ class RightClickButton(Button):
         self.border_width = 0
         self.set_height(32)
         self.border_radius = 4
+        self.background_color_normal = Color(0, 0, 0, 0)
 
     def draw_text(self, canvas: Surface):
         text_surface = super().text_render()

@@ -13,7 +13,7 @@ from numpy import ndarray
 class Card(BackgroundBase, BorderBase):
     def __init__(self, parent: Widget | None = None):
         super().__init__(parent)
-        self.border_radius = 8
+        self.border_radius = 12
 
         self.corners_cache: tuple[Optional[ndarray], Optional[ndarray], Optional[ndarray], Optional[ndarray]] = (None, None, None, None)
 
