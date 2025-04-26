@@ -2,7 +2,7 @@ from .background_base import BackgroundBase, DynamicBackgroundBase
 from .border_base import BorderBase
 from .button import Button
 from .card import Card, DynamicCard
-from .editor import Editor, EditorGrid
+# from .editor import Editor, EditorGrid
 from .label import Label
 from .menu_bar import MenuBar, MenuBarButton
 from .padding import Padding
@@ -12,7 +12,7 @@ from .right_click_menu import RightClickMenu, RightClickButton, MenuSeparator, O
 from .trigger import Trigger
 from .widget import Widget
 
-from .layout import HBoxLayout, VBoxLayout, FlowLayout
+from .layout import Layout, HBoxLayout, VBoxLayout, FlowLayout
 
 
 from pygame.constants import *  # type: ignore

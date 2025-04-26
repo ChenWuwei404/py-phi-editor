@@ -8,6 +8,8 @@ set_language('zh')
 
 from widgets import *
 
+from editor import Editor
+
 class EditorMenuBar(MenuBar):
     def __init__(self, parent=None):
         super().__init__(parent)

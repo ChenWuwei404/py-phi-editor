@@ -1,18 +1,29 @@
-from pygame import Surface, draw
-from .widget import Widget
-from .layout import Layout
-from .padding import Padding
+from pygame import Surface, draw, Color
 
-from .card import Card
+from widgets import *
 
-from .menu_bar import MenuBar
+from i18n import gettext as _
 
-from numpy_renderer import painter
+class EditorMenuBar(MenuBar):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.set_padding(Padding(0, 8, 0, 8))
+        self.background_color_normal = Color(24, 24, 24)
 
 class EditorCard(Card):
     def __init__(self, parent: Widget | None = None):
         super().__init__(parent)
         self.set_padding(Padding(0))
+        self.set_layout(VBoxLayout())
+
+        self.menu_bar = EditorMenuBar()
+        self.add_child(self.menu_bar)
+
+class TimeLineEditor(EditorCard):
+    def __init__(self, parent: Widget | None = None):
+        super().__init__(parent)
+        self.menu_bar.add_child(Label(_("Timeline")))
+        self.menu_bar.add_child(MenuBarButton(_("View")))
 
 class Editor(Widget):
     def __init__(self, parent: Widget | None = None):
@@ -24,7 +35,7 @@ class Editor(Widget):
         self.outline_area = EditorCard()
         self.player_area = EditorCard()
         self.attributes_area = EditorCard()
-        self.timeline_area = EditorCard()
+        self.timeline_area = TimeLineEditor()
         self.editor_area = EditorCard()
 
         self.outline_area.set_parent(self)
