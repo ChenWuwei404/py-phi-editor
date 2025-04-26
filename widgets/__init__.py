@@ -1,8 +1,9 @@
 from .background_base import BackgroundBase, DynamicBackgroundBase
+from .foreground_base import ForegroundBase, DynamicForegroundBase
 from .border_base import BorderBase
 from .button import Button
 from .card import Card, DynamicCard
-# from .editor import Editor, EditorGrid
+from .icon import Icon, DynamicIcon
 from .label import Label
 from .menu_bar import MenuBar, MenuBarButton
 from .padding import Padding

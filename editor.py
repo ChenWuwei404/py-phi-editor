@@ -1,4 +1,4 @@
-from pygame import Surface, draw, Color
+from pygame import Surface, draw, Color, image
 
 from widgets import *
 
@@ -22,7 +22,7 @@ class EditorCard(Card):
 class TimeLineEditor(EditorCard):
     def __init__(self, parent: Widget | None = None):
         super().__init__(parent)
-        self.menu_bar.add_child(Label(_("Timeline")))
+        self.menu_bar.add_child(Icon(image.load_sized_svg(r'./resource/icon/timeline.svg', (20, 20))))
         self.menu_bar.add_child(MenuBarButton(_("View")))
 
 class Editor(Widget):
