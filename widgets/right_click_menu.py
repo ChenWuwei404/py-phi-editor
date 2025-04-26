@@ -23,7 +23,7 @@ class RightClickMenu(Pinned, Card, Shadow):
 
     def update(self):
         self.min_width = max(self.min_width, 200)
-        [child.set_width(-1) for child in self.get_childern()]
+        [child.set_width(-1) for child in self.get_children()]
         self.ease_in += (1-self.ease_in)*0.1
         return super().update()
     

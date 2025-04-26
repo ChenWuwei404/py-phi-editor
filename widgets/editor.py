@@ -38,8 +38,8 @@ class Editor(Widget):
 
         self.set_layout(EditorGrid(self))
 
-    def get_childern(self) -> list[Widget]:
-        return super().get_childern() + [
+    def get_children(self) -> list[Widget]:
+        return super().get_children() + [
             self.outline_area,
             self.player_area,
             self.attributes_area,

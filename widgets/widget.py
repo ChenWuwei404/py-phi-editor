@@ -111,7 +111,7 @@ class Widget:
         self.children.remove(child)
         child.set_parent(None)
 
-    def get_childern(self) -> list['Widget']:
+    def get_children(self) -> list['Widget']:
         return self.children
 
     def set_visible(self, visible: bool = True):
@@ -135,7 +135,7 @@ class Widget:
 
     def clear_focus(self):
         self.focus = False
-        [child.clear_focus() for child in self.get_childern()]
+        [child.clear_focus() for child in self.get_children()]
 
     def set_x(self, x: int):
         self.x = x
@@ -203,13 +203,13 @@ class Widget:
         return canvas
 
     def draw_children(self, canvas: Surface):
-        if self.get_childern():
+        if self.get_children():
             canvas = self.get_subsurface(canvas)
-            [child.draw(canvas) for child in self.get_childern() if child.visible]
+            [child.draw(canvas) for child in self.get_children() if child.visible]
 
     def update(self):
         self.layout.update()
-        [child.update() for child in self.get_childern() if child.visible]
+        [child.update() for child in self.get_children() if child.visible]
 
     def process_event(self, event: Event):
         if event.type == MOUSEMOTION:
@@ -219,10 +219,10 @@ class Widget:
             else:
                 self.mouseLeave(event) if self.hover else None
                 self.hover = False
-            [child.process_event(event) for child in self.get_childern() if child.visible and child.enabled]
+            [child.process_event(event) for child in self.get_children() if child.visible and child.enabled]
 
         if event.type in {MOUSEBUTTONDOWN, MOUSEBUTTONUP}:
-            for child in reversed(self.get_childern()):
+            for child in reversed(self.get_children()):
                 if child.visible and child.enabled and child.absolute_rect.collidepoint(event.pos):
                     child.process_event(event)
                     return
