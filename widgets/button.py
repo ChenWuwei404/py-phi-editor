@@ -1,19 +1,15 @@
 from pygame import Surface, Event
 from .background_base import BackgroundBase
 from .card import Card, DynamicCard
-from .lable import Lable
+from .label import Label
 
 from .widget import Widget
 
-class Button(Lable, DynamicCard):
+class Button(Label, DynamicCard):
     def __init__(self, text: str, parent: Widget | None = None):
         super(DynamicCard, self).__init__(parent)
         super().__init__(text, parent)
         self.set_height(48)
-
-    def draw_self(self, canvas: Surface):
-        super(DynamicCard, self).draw_self(canvas)
-        self.draw_text(canvas)
 
     def draw_text(self, canvas: Surface):
         text_surface = super().text_render()
@@ -42,5 +38,5 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEMOTION:
                 card.process_event(event)
         screen.fill((0, 0, 0))
-        card.draw_self(screen)
+        card.draw(screen)
         pygame.display.update()

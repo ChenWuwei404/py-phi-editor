@@ -19,8 +19,8 @@ class Page(Widget):
         self.pinned_children.remove(child)
         child.set_parent(None)
 
-    def get_childern(self) -> list[Widget]:
-        return super().get_childern() + self.pinned_children
+    def get_children(self) -> list[Widget]:
+        return super().get_children() + self.pinned_children
 
     def update(self):
         self.set_size(*self.screen.size)

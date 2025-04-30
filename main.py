@@ -8,6 +8,8 @@ set_language('zh')
 
 from widgets import *
 
+from editor import Editor
+
 class EditorMenuBar(MenuBar):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -35,7 +37,7 @@ class StatueBar(MenuBar):
         self.set_height(32)
         self.set_padding(Padding(8))
 
-        self.version_label = Lable(_("PyPhiEditor 0.0.1"))
+        self.version_label = Label(_("PyPhiEditor 0.0.1"))
         self.add_child(self.version_label)
 
 statue_bar = StatueBar()
@@ -56,12 +58,14 @@ main_page.add_child(statue_bar)
 
 def add_right_click_menu_test(event: pygame.Event):
     right_test = RightClickMenu(event.pos)
-    right_test.add_child(RightClickMenuTitle(_("Note Clip")))
+    right_test.add_child(RightClickMenuTitle(_("Position Clip")))
     right_test.add_child(RightClickButton(_("Copy")))
     right_test.add_child(RightClickButton(_("Cut")))
-    delete_button = OneTimeRightClickButton(_("Delete"))
+    delete_button = OnceRightClickButton(_("Delete"))
     delete_button.set_color((255, 64, 64))
     right_test.add_child(delete_button)
+    right_test.add_child(MenuSeparator())
+    right_test.add_child(RightClickButton(_("Edit Source")))
     right_test.add_child(MenuSeparator())
     right_test.add_child(RightClickButton(_("Add Modifier")))
     right_test.add_child(RightClickButton(_("Multiline Edit")))

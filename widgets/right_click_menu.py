@@ -3,26 +3,28 @@ from .pinned import Pinned
 from .card import Card
 from .layout import VBoxLayout
 from .padding import Padding
-from .lable import SubTitle
+from .label import SubTitle
+from .shadow import Shadow
 
 from .button import Button
 
-from pygame import Event, Surface, draw
+from pygame import Event, Surface, draw, Color
 
 PADDING = 8
 
-class RightClickMenu(Pinned, Card):
+class RightClickMenu(Pinned, Card, Shadow):
     def __init__(self, position: tuple[int, int], parent=None):
         super().__init__(position, parent)
         self.set_layout(VBoxLayout())
         self.set_content_align(0)
         self.set_padding(Padding(PADDING))
         self.set_spacing(0)
+        self.background_color_normal = Color(24, 24, 24)
         self.ease_in = 0
 
     def update(self):
         self.min_width = max(self.min_width, 200)
-        [child.set_width(-1) for child in self.get_childern()]
+        [child.set_width(-1) for child in self.get_children()]
         self.ease_in += (1-self.ease_in)*0.1
         return super().update()
     
@@ -51,6 +53,7 @@ class RightClickButton(Button):
         self.border_width = 0
         self.set_height(32)
         self.border_radius = 4
+        self.background_color_normal = Color(0, 0, 0, 0)
 
     def draw_text(self, canvas: Surface):
         text_surface = super().text_render()
@@ -64,7 +67,7 @@ class RightClickButton(Button):
         else:
             raise ValueError("Parent of VSeparator must be RightClickMenu")
 
-class OneTimeRightClickButton(RightClickButton):
+class OnceRightClickButton(RightClickButton):
     def mouseLeftPressed(self, event: Event):
         super().mouseLeftPressed(event)
         self.get_parent().get_parent().remove_pinned_child(self.get_parent())

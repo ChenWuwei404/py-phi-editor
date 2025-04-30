@@ -1,20 +1,29 @@
-from pygame import Surface, draw
-from .widget import Widget
-from .layout import Layout
-from .padding import Padding
+from pygame import Surface, draw, Color, image
 
-from .card import Card
+from widgets import *
 
-from .menu_bar import MenuBar
+from i18n import gettext as _
+
+class EditorMenuBar(MenuBar):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.set_padding(Padding(0, 8, 0, 8))
+        self.background_color_normal = Color(24, 24, 24)
 
 class EditorCard(Card):
     def __init__(self, parent: Widget | None = None):
         super().__init__(parent)
         self.set_padding(Padding(0))
-        
-    def draw_border(self, canvas: Surface):
-        if self.border_width:
-            draw.rect(canvas, self.border_color_normal, self.rect.inflate(-self.get_parent().spacing, -self.get_parent().spacing), self.border_width, border_radius=self.border_radius)
+        self.set_layout(VBoxLayout())
+
+        self.menu_bar = EditorMenuBar()
+        self.add_child(self.menu_bar)
+
+class TimeLineEditor(EditorCard):
+    def __init__(self, parent: Widget | None = None):
+        super().__init__(parent)
+        self.menu_bar.add_child(Icon(image.load_sized_svg(r'./resource/icon/timeline.svg', (20, 20))))
+        self.menu_bar.add_child(MenuBarButton(_("View")))
 
 class Editor(Widget):
     def __init__(self, parent: Widget | None = None):
@@ -26,7 +35,7 @@ class Editor(Widget):
         self.outline_area = EditorCard()
         self.player_area = EditorCard()
         self.attributes_area = EditorCard()
-        self.timeline_area = EditorCard()
+        self.timeline_area = TimeLineEditor()
         self.editor_area = EditorCard()
 
         self.outline_area.set_parent(self)
@@ -37,8 +46,8 @@ class Editor(Widget):
 
         self.set_layout(EditorGrid(self))
 
-    def get_childern(self) -> list[Widget]:
-        return super().get_childern() + [
+    def get_children(self) -> list[Widget]:
+        return super().get_children() + [
             self.outline_area,
             self.player_area,
             self.attributes_area,
