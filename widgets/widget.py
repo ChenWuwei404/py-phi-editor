@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, TYPE_CHECKING
 from pygame import Event, Surface, Rect, mouse
 from pygame.constants import *  # type: ignore
 
@@ -6,6 +6,9 @@ from .padding import Padding
 
 from .layout import Layout
 from .trigger import Trigger
+
+if TYPE_CHECKING:
+    from .page import Page
 
 
 class Widget:
@@ -127,11 +130,14 @@ class Widget:
             self.get_root().clear_focus()
         self.focus = focus
 
-    def get_root(self) -> 'Widget':
+    def get_root(self) -> 'Page':
         if self.parent:
             return self.parent.get_root()
         else:
-            return self
+            if self.parent == None:
+                return self  # type: ignore
+            else:
+                raise ValueError('Widget has no parent')
 
     def clear_focus(self):
         self.focus = False
