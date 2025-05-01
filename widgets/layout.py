@@ -53,7 +53,7 @@ class HBoxLayout(Layout):
         max_line_height = 0
 
         for child in parent.children:
-            child.max_width = parent.content_width
+            child.max_width_layout = parent.content_width
             child.set_pos(x, (parent.content_height - child.height) // 2)
             max_line_height = max(max_line_height, child.height)
             x += child.width + parent.spacing
@@ -75,10 +75,10 @@ class VBoxLayout(Layout):
         if space_height:
             unset_height_children = [child for child in parent.children if child.setted_height == -1]
             for child in unset_height_children:
-                child.max_height = (space_height // len(unset_height_children))
+                child.max_height_layout = (space_height // len(unset_height_children))
 
         for child in parent.children:
-            child.max_width = parent.content_width
+            child.max_width_layout = parent.content_width
             child.set_pos((parent.content_width-child.width)//2, y) if parent.content_align == 1 else child.set_pos(0, y) if parent.content_align == 0 else child.set_pos(parent.content_width-child.width, y)
             max_col_width = max(max_col_width, child.width)
             y += child.height + parent.spacing

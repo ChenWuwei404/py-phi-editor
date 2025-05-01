@@ -29,8 +29,8 @@ class Widget:
         self.min_width = 0
         self.min_height = 0
 
-        self.max_width = 0
-        self.max_height = 0
+        self.max_width_layout = 0
+        self.max_height_layout = 0
 
         self.padding = Padding(16)
         self.spacing = 16
@@ -50,6 +50,19 @@ class Widget:
         self.mouse_enter = Trigger()
         self.mouse_leave = Trigger()
         
+    @property
+    def max_width(self) -> int:
+        if self.max_width_layout:
+            return self.max_width_layout
+        else:
+            return self.parent.max_width if self.parent else 0
+        
+    @property
+    def max_height(self) -> int:
+        if self.max_height_layout:
+            return self.max_height_layout
+        else:
+            return self.parent.max_height if self.parent else 0
 
     @property
     def width(self) -> int:

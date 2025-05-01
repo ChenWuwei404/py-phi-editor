@@ -58,7 +58,7 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEMOTION:
                 menu.process_event(event)
         screen.fill((0, 0, 0))
-        menu.max_width = screen.get_width()
+        menu.max_width_layout = screen.get_width()
         menu.update()
         menu.draw(screen)
         pygame.display.update()
