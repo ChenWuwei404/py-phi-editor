@@ -56,25 +56,26 @@ main_page.add_child(editor_area)
 main_page.add_child(statue_bar)
 
 
-def add_right_click_menu_test(event: pygame.Event):
-    right_test = RightClickMenu(event.pos)
-    right_test.add_child(RightClickMenuTitle(_("Position Clip")))
-    right_test.add_child(RightClickButton(_("Copy")))
-    right_test.add_child(RightClickButton(_("Cut")))
-    delete_button = OnceRightClickButton(_("Delete"))
-    delete_button.set_color((255, 64, 64))
-    right_test.add_child(delete_button)
-    right_test.add_child(MenuSeparator())
-    right_test.add_child(RightClickButton(_("Edit Source")))
-    right_test.add_child(MenuSeparator())
-    right_test.add_child(RightClickButton(_("Add Modifier")))
-    right_test.add_child(RightClickButton(_("Multiline Edit")))
-    main_page.add_pinned_child(right_test)
+# def add_right_click_menu_test(event: pygame.Event):
+#     right_test = RightClickMenu(event.pos)
+#     right_test.add_child(RightClickMenuTitle(_("Position Clip")))
+#     right_test.add_child(RightClickButton(_("Copy")))
+#     right_test.add_child(RightClickButton(_("Cut")))
+#     delete_button = OnceRightClickButton(_("Delete"))
+#     delete_button.set_color((255, 64, 64))
+#     right_test.add_child(delete_button)
+#     right_test.add_child(MenuSeparator())
+#     right_test.add_child(RightClickButton(_("Edit Source")))
+#     right_test.add_child(MenuSeparator())
+#     right_test.add_child(RightClickButton(_("Add Modifier")))
+#     right_test.add_child(RightClickButton(_("Multiline Edit")))
+#     main_page.add_pinned_child(right_test)
 
-editor_area.timeline_area.right_pressed.connect(add_right_click_menu_test)
+# editor_area.timeline_area.right_pressed.connect(add_right_click_menu_test)
 
 clock = pygame.time.Clock()
 
+editor_area.player_area.set_background_image(pygame.image.load(r'./resource/background.jpg').convert())
 
 while True:
     for event in pygame.event.get():

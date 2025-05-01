@@ -33,32 +33,3 @@ class MenuBarButton(Button):
     def update(self):
         super().update()
         self.color = Color(255, 255, 255) if self.hover else Color(128, 128, 128)
-
-
-if __name__ == '__main__':
-    import pygame
-    pygame.init()
-    screen = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
-
-    menu = MenuBar()
-    menu.set_size(-1, 32)
-    button1 = MenuBarButton("File")
-    button2 = MenuBarButton("Edit")
-    button3 = MenuBarButton("View-g")
-    button4 = MenuBarButton("Help")
-    menu.add_child(button1)
-    menu.add_child(button2)
-    menu.add_child(button3)
-    menu.add_child(button4)
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
-            if event.type == pygame.MOUSEMOTION:
-                menu.process_event(event)
-        screen.fill((0, 0, 0))
-        menu.max_width_layout = screen.get_width()
-        menu.update()
-        menu.draw(screen)
-        pygame.display.update()
