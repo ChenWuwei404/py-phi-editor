@@ -14,6 +14,8 @@ languages = {
         'Save As': '另存为',
         'Exit': '退出',
 
+        'Folder': '文件夹',
+
         'Add': '添加',
         'Edit': '编辑',
         'Undo': '撤销',
@@ -23,8 +25,10 @@ languages = {
         'Paste': '粘贴',
         'Delete': '删除',
         'Select All': '全选',
+        'Reset': '重置',
 
         'View': '视图',
+        'Zoom': '缩放',
         'Zoom In': '放大',
         'Zoom Out': '缩小',
         'Clip': '片段',
@@ -95,6 +99,7 @@ languages = {
         'Intersection': '交点',
         'Intersections': '交点',
         'Vector': '矢量',
+        'Parametric Curves': '参数曲线',
 
     }
 }
